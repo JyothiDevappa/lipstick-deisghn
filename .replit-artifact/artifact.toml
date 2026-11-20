@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Rouge Noir Beauty"
+description = "A frontend-only luxury lipstick storefront with cinematic campaign imagery, shade discovery, and a polished shopping experience."
+version = "1.0.0"
+id = "artifacts/rouge-noir-beauty"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20512
+
+[services.development]
+run = "pnpm --filter @workspace/rouge-noir-beauty run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rouge-noir-beauty", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rouge-noir-beauty/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20512"
+BASE_PATH = "/"
