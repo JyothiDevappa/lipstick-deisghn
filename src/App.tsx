@@ -12,6 +12,7 @@ import rougeCeremonieAfterImage from './assets/rouge-ceremonie-after.jpg';
 import LipstickComparison from '@/components/LipstickComparison';
 import ShopByColours from '@/components/ShopByColours';
 import BeautyAcrossSkinTones from '@/components/BeautyAcrossSkinTones';
+import ColourFeels from '@/components/ColourFeels';
 import NotFound from '@/pages/not-found';
 
 type Product = {
@@ -148,6 +149,7 @@ function HomePage({ onAdd, count }: { onAdd: (p: Product) => void; count: number
         ]}
       />
       <BeautyAcrossSkinTones />
+      <ColourFeels />
       <section className="story-band">
         <div className="story-photo"><img src={storyStrawberryIceImage} alt="JOVANE dark red liquid lipstick with strawberries and ice cubes" /></div>
         <div className="story-copy"><h2 className="serif">Not made to<br />blend in.</h2><p>JOVANE began with a simple conviction: colour should feel like a decision. A red can be a signature, a small rebellion, a private ritual. We make the tools for all three.</p><Link href="/about" className="text-link" data-testid="link-story-more">Read the house story&nbsp; ↗</Link></div>

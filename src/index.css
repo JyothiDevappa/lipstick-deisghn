@@ -1244,3 +1244,101 @@ a { color: inherit; text-decoration: none; }
     padding: 5px 6px;
   }
 }
+
+/* ─── Section 4: The Colour Makes You Feel ─── */
+.colour-feels-section {
+  background: #0d0b0b;
+  color: #f4ece3;
+  overflow: hidden;
+}
+
+.colour-feels-header {
+  text-align: center;
+  padding: clamp(48px, 7vw, 96px) clamp(20px, 5vw, 80px) clamp(32px, 4vw, 56px);
+}
+
+.colour-feels-title {
+  font-family: var(--app-font-serif);
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.0;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  color: #f4ece3;
+}
+
+.colour-feels-title em {
+  color: #9C1A3A;
+  font-style: normal;
+}
+
+.colour-feels-sub {
+  font-size: clamp(11px, 1.2vw, 14px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9e8f85;
+  margin: 0;
+}
+
+/* 3-column video grid — zero gap, edge-to-edge */
+.colour-feels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  width: 100%;
+}
+
+.colour-feels-cell {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 0.62;
+  background: #1a1212;
+}
+
+.colour-feels-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.colour-feels-cell:hover .colour-feels-video {
+  transform: scale(1.04);
+}
+
+.colour-feels-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(8, 6, 6, 0.72) 100%);
+  pointer-events: none;
+}
+
+.colour-feels-label {
+  position: absolute;
+  bottom: clamp(16px, 3vw, 32px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .colour-feels-grid {
+    grid-template-columns: 1fr;
+  }
+  .colour-feels-cell {
+    aspect-ratio: 0.75;
+  }
+  .colour-feels-header {
+    padding: 48px 20px 28px;
+  }
+}
