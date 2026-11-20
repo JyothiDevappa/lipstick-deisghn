@@ -248,11 +248,7 @@ export default function BeautyAcrossSkinTones({
           <div className="skin-tones-bottom-inner">
             <div className="skin-tones-bottom-statement">
               <span className="serif skin-tones-bottom-tagline">“Colour was never meant to be one-size-fits-all.”</span>
-              <p>Formulated with micro-milled pigments and cold-pressed squalane for true-to-tube payoff across every undertone.</p>
             </div>
-            <a href="/shop" className="hero-link skin-tones-shop-link">
-              EXPLORE ALL 8 SHADES
-            </a>
           </div>
         </div>
       </div>
@@ -297,9 +293,6 @@ export default function BeautyAcrossSkinTones({
               </div>
 
               <div className="skin-modal-info-col">
-                <div className="eyebrow" style={{ color: '#800020' }}>
-                  {selectedLook.shadeCode} · {selectedLook.finish}
-                </div>
                 <h3 className="serif skin-modal-title">{selectedLook.shadeName}</h3>
                 <p className="skin-modal-quote">{selectedLook.editorialQuote}</p>
                 <p className="skin-modal-description">{selectedLook.description}</p>
