@@ -43,12 +43,7 @@ function Header({ count, openBag, solid = false }: { count: number; openBag: () 
     <header className={`header ${solid ? 'solid' : ''}`}>
       <div className="header-spacer" />
       <Link href="/" className="brand brand-center" data-testid="link-home">JOVANE</Link>
-      <div className="nav-actions">
-        <button className="icon-button" aria-label="Open shopping bag" data-testid="button-open-bag" onClick={openBag}>
-          <ShoppingBag size={17} strokeWidth={1.4} />
-          <span className="bag-count" data-testid="text-bag-count">{count}</span>
-        </button>
-      </div>
+      <div className="nav-actions"></div>
     </header>
   </>;
 }
