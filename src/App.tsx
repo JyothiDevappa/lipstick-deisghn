@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, Route, Switch, useParams } from 'wouter';
 import { ArrowRight, Menu, ShoppingBag, X } from 'lucide-react';
 import heroImage from './assets/hero.png';
+import heroVideo from './assets/vid/jovane.mp4';
 import closeupImage from './assets/hero-campaign.jpg';
 import storyStrawberryIceImage from './assets/story-strawberry-ice.png';
 import rougeImage from './assets/rouge-ceremonie-after.jpg';
@@ -40,7 +41,6 @@ const products: Product[] = [
 
 function Header({ count, openBag, solid = false }: { count: number; openBag: () => void; solid?: boolean }) {
   return <>
-    <div className="announcement">Complimentary delivery on house orders over $100</div>
     <header className={`header ${solid ? 'solid' : ''}`}>
       <div className="header-spacer" />
       <Link href="/" className="brand brand-center" data-testid="link-home">JOVANE</Link>
@@ -119,7 +119,14 @@ function HomePage({ onAdd, count }: { onAdd: (p: Product) => void; count: number
     <Header count={count} openBag={() => window.dispatchEvent(new Event('open-bag'))} />
     <main>
       <section className="hero">
-        <img className="hero-photo" src={heroImage} alt="JOVANE campaign banner" />
+        <video
+          className="hero-photo"
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
         <div className="hero-content">
           <div className="hero-actions">
             <Link href="/shop" className="hero-link" data-testid="button-explore-collection">
