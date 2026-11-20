@@ -9,7 +9,6 @@ export interface ColourCategory {
   id: string;
   name: string;
   image: string;
-  href: string;
   shadeHint?: string;
   count?: number;
 }
@@ -19,28 +18,24 @@ const defaultCategories: ColourCategory[] = [
     id: 'choco-brownie',
     name: 'Choco Brownie',
     image: img01,
-    href: '/shop?category=The%20Nudes',
     shadeHint: 'Dark cocoa & rich espresso undertones',
   },
   {
     id: 'deep-magenta',
     name: 'Deep Magenta',
     image: img02,
-    href: '/shop?category=The%20Icons',
     shadeHint: 'Electric plum, rich fuchsia & nocturnal magenta',
   },
   {
     id: 'baby-pink',
     name: 'Baby Pink',
     image: img03,
-    href: '/shop?category=The%20Nudes',
     shadeHint: 'Soft petal blush & delicate milky pink',
   },
   {
     id: 'classic-red',
     name: 'The Reds',
     image: img04,
-    href: '/shop?category=The%20Icons',
     shadeHint: 'Vivid crimson & iconic scarlet',
   },
 ];
@@ -87,14 +82,11 @@ export default function ShopByColours({
   };
 
   return (
-    <section className="shop-by-colours-section" ref={containerRef}>
+    <section className="shop-by-colours-section" id="shop-by-colours" ref={containerRef}>
       <div className="colours-inner">
         {/* Header bar - exact Sunnies Face style */}
         <div className="colours-header">
           <h2 className="colours-title">Shop by colours</h2>
-          <Link href="/shop" className="colours-shop-all" data-testid="link-shop-all-colours">
-            Shop all
-          </Link>
         </div>
 
         {/* Interactive Drag Carousel */}

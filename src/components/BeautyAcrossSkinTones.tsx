@@ -28,21 +28,6 @@ export interface BeautyLook {
 
 export const defaultBeautyLooks: BeautyLook[] = [
   {
-    id: 'look-01',
-    shadeName: 'Velours Nuit',
-    shadeCode: 'SHADE 01',
-    hexColor: '#5a1724',
-    finish: 'Velvet Matte Liquid',
-    skinTone: 'Rich Deep Ebony',
-    undertone: 'Cool / Neutral',
-    hairStyle: 'Voluminous Loose Flowing Waves',
-    modelStyle: 'Elegant Soft Glam · kajal-lined gaze · champagne silk',
-    description: 'A deep blackberry wine liquid lipstick complemented by soft glam makeup, kajal-defined eyes, and cascading silky waves.',
-    editorialQuote: '“Soft glam with an undeniable edge. A rich blackberry velvet that defines modern allure.”',
-    image: model01,
-    category: 'deep',
-  },
-  {
     id: 'look-02',
     shadeName: 'Brun Chocolat',
     shadeCode: 'SHADE 02',
@@ -101,21 +86,6 @@ export const defaultBeautyLooks: BeautyLook[] = [
     editorialQuote: '“Fierce, regal, and unapologetically electric from every angle.”',
     image: model05,
     category: 'deep',
-  },
-  {
-    id: 'look-06',
-    shadeName: 'Rose Obscur',
-    shadeCode: 'SHADE 06',
-    hexColor: '#a8535c',
-    finish: 'Soft-Focus Muted Matte',
-    skinTone: 'Medium Olive · Mediterranean',
-    undertone: 'Warm Olive / Neutral',
-    hairStyle: 'Voluminous Waves under Wide-Brim Hat',
-    modelStyle: 'Modern Luxury Diva · glamorous mauve-bronze eyes · tailored coat',
-    description: 'A dusty rose mauve styled with rich glamorous eye makeup, thick fluttery lashes, a wide-brim felt hat, and cashmere camel tailoring.',
-    editorialQuote: '“Old-world Hollywood glamour reimagined into modern everyday luxury.”',
-    image: model06,
-    category: 'warm',
   },
   {
     id: 'look-07',
@@ -321,15 +291,13 @@ export default function BeautyAcrossSkinTones({
                 </div>
 
                 <div className="skin-modal-actions">
-                  <a
-                    href={`/shop`}
+                  <button
+                    type="button"
                     className="button-primary skin-modal-btn"
-                    onClick={() => {
-                      if (onSelectShade) onSelectShade(selectedLook.shadeName);
-                    }}
+                    onClick={() => setSelectedLook(null)}
                   >
-                    View in Shop — $48
-                  </a>
+                    Close Look
+                  </button>
                 </div>
               </div>
             </div>

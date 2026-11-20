@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Route, Switch, useParams } from 'wouter';
 import { ArrowRight, Menu, ShoppingBag, X } from 'lucide-react';
 import heroImage from './assets/hero.png';
 import heroVideo from './assets/vid/jovane.mp4';
 import closeupImage from './assets/hero-campaign.jpg';
-import storyStrawberryIceImage from './assets/story-strawberry-ice.png';
 import rougeImage from './assets/rouge-ceremonie-after.jpg';
 import veloursImage from './assets/redlip.png';
 import beforeLipsImage from './assets/img-before.png';
@@ -129,9 +128,17 @@ function HomePage({ onAdd, count }: { onAdd: (p: Product) => void; count: number
         />
         <div className="hero-content">
           <div className="hero-actions">
-            <Link href="/shop" className="hero-link" data-testid="button-explore-collection">
+            <a
+              href="#shop-by-colours"
+              className="hero-link"
+              data-testid="button-explore-collection"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('shop-by-colours')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Explore the collection
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -157,35 +164,7 @@ function HomePage({ onAdd, count }: { onAdd: (p: Product) => void; count: number
       />
       <ColourFeels />
       <BeautyAcrossSkinTones />
-      <section className="story-band">
-        <div className="story-photo"><img src={storyStrawberryIceImage} alt="JOVANE dark red liquid lipstick with strawberries and ice cubes" /></div>
-        <div className="story-copy"><h2 className="serif">Not made to<br />blend in.</h2><p>JOVANE began with a simple conviction: colour should feel like a decision. A red can be a signature, a small rebellion, a private ritual. We make the tools for all three.</p><Link href="/about" className="text-link" data-testid="link-story-more">Read the house story&nbsp; ↗</Link></div>
-      </section>
       <section className="quote-section"><div className="eyebrow">The house note</div><p className="quote serif">“The final touch is never just the final touch. It is the beginning of being seen.”</p><div className="quote-attribution">From the JOVANE atelier</div></section>
-    </main>
-    <Footer />
-  </>;
-}
-
-function ShopPage({ onAdd, count }: { onAdd: (p: Product) => void; count: number }) {
-  const params = new URLSearchParams(window.location.search);
-  const [filter, setFilter] = useState(params.get('category') || 'All');
-  const [sort, setSort] = useState('featured');
-  const categories = ['All', 'The Icons', 'The Nudes', 'The Atelier'];
-  const visible = useMemo(() => {
-    const filtered = filter === 'All' ? [...products] : products.filter(p => p.category === filter);
-    if (sort === 'price-low') filtered.sort((a, b) => a.price - b.price);
-    if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
-    return filtered;
-  }, [filter, sort]);
-  return <>
-    <Header count={count} openBag={() => window.dispatchEvent(new Event('open-bag'))} solid />
-    <main>
-      <div className="page-top"><div className="eyebrow">The JOVANE collection</div><h1 className="serif">Colour,<br />considered.</h1><p>A tightly edited wardrobe of lip colour. Each shade made to be worn with intention, and nowhere else in mind.</p></div>
-      <section className="shop-content">
-        <div className="shop-toolbar"><div className="filter-group">{categories.map(cat => <button key={cat} className={`filter-chip ${filter === cat ? 'active' : ''}`} data-testid={`button-filter-${cat.toLowerCase().replaceAll(' ', '-')}`} onClick={() => setFilter(cat)}>{cat}</button>)}</div><div style={{ display: 'flex', alignItems: 'center', gap: 16 }}><span className="result-count" data-testid="text-result-count">{visible.length} pieces</span><select className="sort-select" value={sort} data-testid="select-sort" onChange={e => setSort(e.target.value)} aria-label="Sort products"><option value="featured">Sort: House edit</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option></select></div></div>
-        <div className="shop-grid">{visible.length ? visible.map(p => <ProductCard key={p.slug} product={p} onAdd={onAdd} />) : <div className="no-results">The dressing room is quiet. Try another edit.</div>}</div>
-      </section>
     </main>
     <Footer />
   </>;
@@ -198,7 +177,7 @@ function ProductPage({ onAdd, count }: { onAdd: (p: Product) => void; count: num
   return <>
     <Header count={count} openBag={() => window.dispatchEvent(new Event('open-bag'))} solid />
     <main className="detail-wrap">
-      <div className="breadcrumb"><Link href="/" data-testid="link-breadcrumb-home">Home</Link><span>/</span><Link href="/shop" data-testid="link-breadcrumb-shop">The collection</Link><span>/</span><span>{product.name}</span></div>
+      <div className="breadcrumb"><Link href="/" data-testid="link-breadcrumb-home">Home</Link><span>/</span><Link href="/" data-testid="link-breadcrumb-shop">The collection</Link><span>/</span><span>{product.name}</span></div>
       <div className="detail-grid">
         <div className="detail-image"><img src={product.image} alt={`${product.name} luxury lipstick campaign`} /></div>
         <div className="detail-info"><div className="eyebrow">{product.category} · The house colour</div><h1 className="serif">{product.name}</h1><div className="detail-price">${product.price}.00</div><p className="detail-description">{product.description}</p>
@@ -215,10 +194,10 @@ function AboutPage({ count }: { count: number }) {
   return <>
     <Header count={count} openBag={() => window.dispatchEvent(new Event('open-bag'))} solid />
     <main>
-      <section className="about-intro" style={{ paddingTop: '120px' }}><h2 className="serif">Born between<br />the curtain and<br />the camera.</h2><div><p>JOVANE is an independent lipstick house built around a single, enduring idea: colour is presence. Not decoration. Not a finishing touch. A way of taking up space, on your own terms.</p><p>Our imagined atelier lives somewhere backstage in Paris — in the hush before the lights, the softened click of a compact, the red that survives the night. That is where every shade begins.</p><Link href="/shop" className="text-link" style={{ color: '#241a18' }} data-testid="link-about-shop">Meet the collection&nbsp; ↗</Link></div></section>
+      <section className="about-intro" style={{ paddingTop: '120px' }}><h2 className="serif">Born between<br />the curtain and<br />the camera.</h2><div><p>JOVANE is an independent lipstick house built around a single, enduring idea: colour is presence. Not decoration. Not a finishing touch. A way of taking up space, on your own terms.</p><p>Our imagined atelier lives somewhere backstage in Paris — in the hush before the lights, the softened click of a compact, the red that survives the night. That is where every shade begins.</p><a href="/#shop-by-colours" className="text-link" style={{ color: '#241a18' }} data-testid="link-about-shop">Meet the collection&nbsp; ↗</a></div></section>
       <section className="manifesto"><div className="eyebrow" style={{ justifyContent: 'center' }}>Our point of view</div><p className="serif">We believe a lipstick can be a <em>small ceremony.</em><br />A daily act of authorship.<br />A little audacity, made wearable.</p></section>
       <section className="process"><div className="eyebrow">The house codes</div><h2 className="serif" style={{ fontSize: 'clamp(45px,6vw,70px)', margin: '17px 0 0' }}>Three things we keep.</h2><div className="process-grid"><article className="process-item"><div className="process-number">01</div><h3>Colour with conviction</h3><p>We do not make a shade just to fill a line. Every colour earns its place at the mirror.</p></article><article className="process-item"><div className="process-number">02</div><h3>Presence, not perfection</h3><p>A real face, a real evening, a red that moves with you. The ritual is personal; the result is yours.</p></article><article className="process-item"><div className="process-number">03</div><h3>Less, but considered</h3><p>A small edit of objects made to be kept close, reached for often, and remembered.</p></article></div></section>
-      <section className="quote-section"><div className="eyebrow">The house signature</div><p className="quote serif">“Wear the red. Keep the room.”</p><Link href="/shop" className="text-link" style={{ display: 'inline-block', marginTop: 15 }} data-testid="link-about-collection">Discover the collection&nbsp; ↗</Link></section>
+      <section className="quote-section"><div className="eyebrow">The house signature</div><p className="quote serif">“Wear the red. Keep the room.”</p><a href="/#shop-by-colours" className="text-link" style={{ display: 'inline-block', marginTop: 15 }} data-testid="link-about-collection">Discover the collection&nbsp; ↗</a></section>
     </main><Footer />
   </>;
 }
@@ -248,7 +227,6 @@ function App() {
   return <div className="site-shell">
     <Switch>
       <Route path="/"><HomePage onAdd={addToBag} count={bagCount} /></Route>
-      <Route path="/shop"><ShopPage onAdd={addToBag} count={bagCount} /></Route>
       <Route path="/product/:slug"><ProductPage onAdd={addToBag} count={bagCount} /></Route>
       <Route path="/about"><AboutPage count={bagCount} /></Route>
       <Route component={NotFound} />
@@ -256,7 +234,7 @@ function App() {
     <div className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} data-testid="bag-backdrop" />
     <aside className={`bag-drawer ${bagOpen ? 'open' : ''}`} aria-label="Shopping bag" data-testid="panel-bag">
       <div className="bag-heading"><h2 className="serif">Your bag <span style={{ fontSize: 14, color: '#8c8176' }}>({bagCount})</span></h2><button className="bag-close" aria-label="Close bag" data-testid="button-close-bag" onClick={() => setBagOpen(false)}><X size={19} /></button></div>
-      {bag.length ? <><div className="bag-items">{bag.map(({ product, quantity }) => <div className="bag-item" key={product.slug}><img src={product.image} alt={product.name} /><div><div className="bag-item-name">{product.name}</div><div className="bag-item-detail">{product.shade} · ${product.price}</div><div className="qty-controls"><button aria-label={`Decrease ${product.name}`} data-testid={`button-quantity-minus-${product.slug}`} onClick={() => adjust(product.slug, -1)}>−</button><span data-testid={`text-quantity-${product.slug}`}>{quantity}</span><button aria-label={`Increase ${product.name}`} data-testid={`button-quantity-plus-${product.slug}`} onClick={() => adjust(product.slug, 1)}>+</button></div><button className="remove-item" data-testid={`button-remove-${product.slug}`} onClick={() => remove(product.slug)}>Remove</button></div><div className="bag-item-price">${product.price * quantity}</div></div>)}</div><div className="bag-bottom"><div className="bag-total"><span>Subtotal</span><span data-testid="text-bag-subtotal">${subtotal}.00</span></div><p className="bag-disclaimer">This is a visual demo bag. No checkout or purchase is available. Your selections stay in this browser session.</p><button className="button-primary" data-testid="button-demo-bag" onClick={() => setBagOpen(false)}>Continue admiring</button></div></> : <div className="bag-empty"><div className="bag-empty-mark">R/N</div><p>Your dressing room is waiting. Find a colour that feels like you.</p><Link href="/shop" className="button-primary" style={{ display: 'inline-flex', alignItems: 'center', marginTop: 12 }} data-testid="link-bag-shop" onClick={() => setBagOpen(false)}>Explore the collection</Link></div>}
+      {bag.length ? <><div className="bag-items">{bag.map(({ product, quantity }) => <div className="bag-item" key={product.slug}><img src={product.image} alt={product.name} /><div><div className="bag-item-name">{product.name}</div><div className="bag-item-detail">{product.shade} · ${product.price}</div><div className="qty-controls"><button aria-label={`Decrease ${product.name}`} data-testid={`button-quantity-minus-${product.slug}`} onClick={() => adjust(product.slug, -1)}>−</button><span data-testid={`text-quantity-${product.slug}`}>{quantity}</span><button aria-label={`Increase ${product.name}`} data-testid={`button-quantity-plus-${product.slug}`} onClick={() => adjust(product.slug, 1)}>+</button></div><button className="remove-item" data-testid={`button-remove-${product.slug}`} onClick={() => remove(product.slug)}>Remove</button></div><div className="bag-item-price">${product.price * quantity}</div></div>)}</div><div className="bag-bottom"><div className="bag-total"><span>Subtotal</span><span data-testid="text-bag-subtotal">${subtotal}.00</span></div><p className="bag-disclaimer">This is a visual demo bag. No checkout or purchase is available. Your selections stay in this browser session.</p><button className="button-primary" data-testid="button-demo-bag" onClick={() => setBagOpen(false)}>Continue admiring</button></div></> : <div className="bag-empty"><div className="bag-empty-mark">R/N</div><p>Your dressing room is waiting. Find a colour that feels like you.</p><a href="/#shop-by-colours" className="button-primary" style={{ display: 'inline-flex', alignItems: 'center', marginTop: 12 }} data-testid="link-bag-shop" onClick={() => setBagOpen(false)}>Explore the collection</a></div>}
     </aside>
     {toast && <div className="toast" role="status" data-testid="status-added-to-bag"><strong>Added.</strong> {toast}</div>}
   </div>;
